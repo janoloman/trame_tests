@@ -5,50 +5,35 @@ from trame.ui.vuetify import SinglePageLayout
 from trame.widgets import vtk, vuetify
 
 from rovsimlibs import *
-
-# -----------------------------------------------------------------------------
-# VTK
-# -----------------------------------------------------------------------------
-renderer        = vtkRenderer()
-renderWindow    = vtkRenderWindow()
-
-cage_ap_filter  = vtkAppendFilter()
-cage_seen       = vtkAppendFilter()
-cage_assembly   = vtkAssembly()
-
-# Painting colors
-colors = vtkNamedColors()
-sea_color        = colors.GetColor3d("midnightblue")
-rov_color        = colors.GetColor3d("lightsteelblue")
-rov_cone_color   = colors.GetColor3d("gold")
-rx_color         = colors.GetColor3d("salmon")
-test_color       = colors.GetColor3d("mint")
-unseen, seen, hole, fouling_low, fouling_mid, fouling_high = range(0,6)
-
-# Cage params
-cage_h      = 20
-cage_w      = 2*cage_h
-cage_l      = 2*cage_h
-tile_factor = 1
-step        = 1
-
-lut = MakeLUT()
-
+from testlibs import *
 
 # -----------------------------------------------------------------------------
 # VTK
 # -----------------------------------------------------------------------------
 def InitVTK():
-    # CreateStructuredGrid((cage_w,cage_h,1))
-    # CreateCage()    
-    CreateCone()    
+    MakeLUT()
     
-    # Visualize
-    renderWindow.AddRenderer(renderer)
-    renderWindowInteractor = vtkRenderWindowInteractor()
-    renderWindowInteractor.SetRenderWindow(renderWindow)
+    # CreateCone()
+    # CreateRov3D()
+    # CreateStructuredGrid((cage_w,cage_h,1))
+    # CreateCage() 
+    CreateWall()
+
+    # Renderer
     renderer.SetBackground(sea_color)
     renderer.ResetCamera()
+    # setCamera()
+    
+    # RendererWindow
+    renderWindow.AddRenderer(renderer)
+
+    # RendererWindowInteractor
+    renderWindowInteractor = vtkRenderWindowInteractor()
+    renderWindowInteractor.SetRenderWindow(renderWindow)
+    # renderWindowInteractor.Initialize()
+  
+
+    # renderWindowInteractor.Start()
 
 
 # -----------------------------------------------------------------------------
